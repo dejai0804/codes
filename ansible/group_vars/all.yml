@@ -1,0 +1,12 @@
+---
+#Variables for ec2 creation
+aws_access_key: AKIAJ764LAAYWE3VRZWA 
+aws_secret_key: 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
+InstanceType: t2.micro
+KeyPair: KeyPair
+image: ami-00c03f7f7f2ec15c3
+region: us-east-2
+group: default
+SubId: subnet-0067d745c6a94b2ad
+DeviceName: /dev/xvdb
+DeviceType: gp2

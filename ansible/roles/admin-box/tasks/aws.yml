@@ -1,0 +1,30 @@
+---
+- name: Download AWS Inspector agent installer.
+  get_url:
+    url: "https://inspector-agent.amazonaws.com/linux/latest/install"
+    dest: "/tmp/aws_inspector_agent_installer"
+
+- name: Ensure AWS Inspector agent is installed.
+  command: "bash /tmp/aws_inspector_agent_installer"
+  args:
+    creates: "/etc/init.d/awsagent"
+
+- name: Ensure awsagent service is running.
+  service:
+    name: awsagent
+    state: started
+    enabled: true
+
+- name: Install AWS CLI
+  pip: 
+    name: [ 
+      awscli 
+    ]
+ 
+- name: Install AWSLogs (CloudWatch)
+  yum:
+    name: [
+      awslogs
+    ]
+    state: installed
+  
