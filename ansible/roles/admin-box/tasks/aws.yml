@@ -9,6 +9,16 @@
   args:
     creates: "/etc/init.d/awsagent"
 
+
+- name:
+  yum:
+    name: python-pip
+    state: present
+
+- name: Enable EPEL
+  command: yum-config-manager --enable epel
+    
+
 - name: Ensure awsagent service is running.
   service:
     name: awsagent
