@@ -2,15 +2,36 @@
 
 #- include: clamav.yml
 - include: aws.yml
-- include: epel.yml
+#- include: epel.yml
 
-- name: Mount up additional volume
+
+- name: create admin/
+  file:
+    state: directory
+    path: /home/admin/admin/jobs
+    mode: 0775
+    group: admin
+    owner: admin
+
+
+
+- name: format the filesystem     
+  filesystem:
+      fstype: ext4
+      dev: /dev/xvdb
+
+- name: Capture the UUID of a /dev/xvdb volume
+  shell: blkid /dev/xvdb > file.txt &&  sed 's/...........//;s/.............$//' file.txt > result.txt && cat result.txt
+  register: voluuid
+
+
+- name: mount the filesytem
   mount:
-    path: /mnt/deployment
-    src: LABEL="/dev/xvdf" 
+    path: /mnt/admin
+    src: "{{ voluuid.stdout }}" 
     fstype: ext4
-    state: present
-  
+    opts: defaults,nofail
+    state: mounted
 
 - name: Copy /etc/hosts file 
   copy: 
@@ -126,6 +147,12 @@
     mode: 0775
     group: admin
     owner: admin
+
+- name: Install epel for aws linux
+  shell: amazon-linux-extras install epel -y
+  become: yes
+  tags:
+    - sudo
       
 
 - name: Install Tools & Utilities (non development ones)

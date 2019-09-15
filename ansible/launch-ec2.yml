@@ -10,7 +10,7 @@
       image: "{{ image }}"
       region: "{{ region }}"
       group: "{{ group }}"
-      count: 1
+      exact_count: 1
       vpc_subnet_id: "{{ SubId }}"
       wait: yes
       monitoring: yes
@@ -40,6 +40,7 @@
                       host={{ item.public_ip }}
                       port=22
                       state=started
+    when: newinstance.changed
     with_items: "{{ newinstance.instances }}"
 
   
@@ -53,4 +54,5 @@
       region: us-east-2
       device_id: "{{ newinstance.instance_ids[0] }}"
     register: instance_eip
+    when: newinstance.changed
   - debug: var=instance_eip.public_ip
