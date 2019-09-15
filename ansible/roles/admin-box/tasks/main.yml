@@ -5,10 +5,10 @@
 #- include: epel.yml
 
 
-- name: create admin/
+- name: create /mnt/admin/
   file:
     state: directory
-    path: /home/admin/admin/jobs
+    path: /mnt/admin
     mode: 0775
     group: admin
     owner: admin
