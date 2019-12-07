@@ -1,0 +1,200 @@
+---
+
+#- include: clamav.yml
+- include: aws.yml
+#- include: epel.yml
+
+
+- name: create /mnt/admin/
+  file:
+    state: directory
+    path: /mnt/admin
+    mode: 0775
+    group: admin
+    owner: admin
+
+
+
+- name: format the filesystem     
+  filesystem:
+      fstype: ext4
+      dev: /dev/xvdb
+
+- name: Capture the UUID of a /dev/xvdb volume
+  shell: blkid /dev/xvdb > file.txt &&  sed 's/...........//;s/.............$//' file.txt > result.txt && cat result.txt
+  register: voluuid
+
+
+- name: mount the filesytem
+  mount:
+    path: /mnt/admin
+    src: "{{ voluuid.stdout }}" 
+    fstype: ext4
+    opts: defaults,nofail
+    state: mounted
+
+- name: Copy /etc/hosts file 
+  copy: 
+    src: /etc/{{ item }}
+    dest: /etc/
+  with_items:
+    - "hosts"
+
+- name: Ensure that timezone is set to UTC
+  file: 
+    src: /usr/share/zoneinfo/UTC
+    dest: /etc/localtime
+    state: link
+    force: yes
+ 
+- name: Ensure that rsyslog does not follow traditional timestamp, but ISO8601 format
+  replace: 
+    dest: /etc/rsyslog.conf
+    regexp: '^\$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat'
+    replace: '#$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat'
+    backup: yes
+
+- name: Restart rsyslog for ISO8601 timestamp to take effect
+  service:
+    name: rsyslog
+    state: restarted
+    enabled: yes
+  
+- name: Install ntp 
+  yum: 
+    name: [ ntp ]
+    state: present
+  register: ntpinstall
+
+
+- name: Start the ntp service
+  service: 
+    name: ntpd
+    state: restarted
+    enabled: yes
+ 
+- name: Allow 'wheel' group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+
+- name: Create a 4096-bit SSH key for user deployment in ~/.ssh/id_rsa
+  user:
+    name: admin
+    generate_ssh_key: yes
+    ssh_key_bits: 4096
+    ssh_key_file: .ssh/id_rsa
+    shell: /bin/bash
+
+- name: create /mnt/admin/jobs
+  file:
+    state: directory
+    path: /mnt/admin/jobs/
+    mode: 0775
+    group: admin
+    owner: admin 
+  
+
+- name: change ownership of /mnt/admin
+  file:
+    path: /mnt/admin
+    owner: admin
+    group: admin
+    mode: 0755
+  
+- name: Copy config files to /home/admin/.ssh/
+  copy:
+    src: files/home/admin/.ssh/config
+    dest: /home/admin/.ssh/
+    owner: admin
+    group: admin
+    mode: 0500
+  tags:
+    - config
+- name: Create a symlink to /mnt/admin/jobs
+  file:
+    src: /mnt/admin/jobs
+    dest: /home/admin/jobs
+    state: link
+    force: no
+    group: admin
+    owner: admin
+    mode: 0775
+  tags:
+    - symlink
+
+
+- name: ensure symlink is present
+  file:
+    path: /home/admin/jobs
+    state: link
+    owner: admin
+    group: admin
+    src: /mnt/admin/jobs
+    dest: /home/admin/jobs
+    mode: 0775
+  tags:
+    - symlink 
+
+      
+- name: create admin/
+  file:
+    state: directory
+    path: /home/admin/admin/jobs
+    mode: 0775
+    group: admin
+    owner: admin
+
+- name: Install epel for aws linux
+  shell: amazon-linux-extras install epel -y
+  become: yes
+  tags:
+    - sudo
+      
+
+- name: Install Tools & Utilities (non development ones)
+  yum:
+    name: [
+     jq,
+     tmux,
+     lsof,
+     dos2unix,
+     unix2dos,
+     tree,
+     wget,
+     lz4,
+     curl,
+     rsync,
+     iptraf,
+     telnet,
+     nc,
+     tcpdump,
+     ltrace,
+     strace,
+     iftop,
+     pv,
+     git,
+     logrotate
+    ]    
+    state: installed
+    enablerepo: epel
+
+- name: "Changing hostname"
+  hostname:
+       name: admin-box
+  
+- name: "Updated /etc/hosts"
+  lineinfile:
+          dest: /etc/hosts
+          regexp: '^127\.0\.0\.1[ \t]+localhost'
+          line: '127.0.0.1 localhost admin-box'
+          state: present
+  
+
+- name: "Restart network service"
+  service:
+       name: network
+       state: restarted

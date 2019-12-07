@@ -1,0 +1,58 @@
+---
+- name: ec2 launcher
+  hosts: localhost
+  connection: local
+  tasks:
+  - name: lauching ec2
+    ec2:
+      instance_type: "{{InstanceType}}"
+      key_name: "{{KeyPair}}"
+      image: "{{ image }}"
+      region: "{{ region }}"
+      group: "{{ group }}"
+      exact_count: 1
+      vpc_subnet_id: "{{ SubId }}"
+      wait: yes
+      monitoring: yes
+      volumes:
+        - device_name: "{{ DeviceName }}"
+          volume_type: "{{ DeviceType }}"
+          volume_size: 100
+          delete_on_termination: true
+      assign_public_ip: yes
+      aws_access_key: "{{aws_access_key}}"
+      aws_secret_key: "{{aws_secret_key}}"
+      count_tag:
+            Name: admin-box
+            enviro: admin
+            zone: admin
+            region: "{{region}}"
+      instance_tags:
+        Name: admin-box
+        enviro: admin
+        zone: admin
+        region: "{{region}}"
+      
+    register: newinstance
+        
+  - name: Wait for EC2 Instance to Spin-up and ready for SSH access
+    local_action: wait_for
+                      host={{ item.public_ip }}
+                      port=22
+                      state=started
+    when: newinstance.changed
+    with_items: "{{ newinstance.instances }}"
+
+  
+  - name: Allocating elastic IP to instance
+    ec2_eip:
+      aws_access_key: "{{aws_access_key}}"
+      aws_secret_key: "{{aws_secret_key}}"
+      in_vpc: yes
+      reuse_existing_ip_allowed: yes
+      state: present
+      region: us-east-2
+      device_id: "{{ newinstance.instance_ids[0] }}"
+    register: instance_eip
+    when: newinstance.changed
+  - debug: var=instance_eip.public_ip

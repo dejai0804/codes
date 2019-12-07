@@ -1,0 +1,20 @@
+---
+- name: Install clamav
+  yum: 
+    name: [
+      clamav,
+      clamav-update
+    ]
+    disablerepo: epel
+  register: claminstall
+   
+- name: Copy clamav config
+  copy:
+    src: /etc/clamd.d/scan.conf
+    dest: /etc/clamd.d/
+
+- name: Start the clamd.scan service
+  service:
+    name: clamd.scan
+    state: restarted
+    enabled: yes
