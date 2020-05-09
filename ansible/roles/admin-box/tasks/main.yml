@@ -10,8 +10,8 @@
     state: directory
     path: /mnt/admin
     mode: 0775
-    group: admin
-    owner: admin
+    group: root
+    owner: root
 
 
 
@@ -94,23 +94,23 @@
     state: directory
     path: /mnt/admin/jobs/
     mode: 0775
-    group: admin
-    owner: admin 
+    group: root
+    owner: root
   
 
 - name: change ownership of /mnt/admin
   file:
     path: /mnt/admin
-    owner: admin
-    group: admin
+    owner: root
+    group: root
     mode: 0755
   
 - name: Copy config files to /home/admin/.ssh/
   copy:
     src: files/home/admin/.ssh/config
     dest: /home/admin/.ssh/
-    owner: admin
-    group: admin
+    owner: root
+    group: root
     mode: 0500
   tags:
     - config
@@ -120,8 +120,8 @@
     dest: /home/admin/jobs
     state: link
     force: no
-    group: admin
-    owner: admin
+    group: root
+    owner: root
     mode: 0775
   tags:
     - symlink
@@ -131,8 +131,8 @@
   file:
     path: /home/admin/jobs
     state: link
-    owner: admin
-    group: admin
+    owner: root
+    group: root
     src: /mnt/admin/jobs
     dest: /home/admin/jobs
     mode: 0775
@@ -145,8 +145,8 @@
     state: directory
     path: /home/admin/admin/jobs
     mode: 0775
-    group: admin
-    owner: admin
+    group: root
+    owner: root
 
 - name: Install epel for aws linux
   shell: amazon-linux-extras install epel -y
