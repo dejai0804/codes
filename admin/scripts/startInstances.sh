@@ -1,6 +1,5 @@
-hosts=(
-  "i-01d6e6ed4cbeef584"
-  )
+
+hosts=$InstanceIds
 
 for host in ${hosts[@]};
 do
