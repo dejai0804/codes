@@ -1,0 +1,112 @@
+---
+- include: epel.yml
+
+
+- name: Ensure that timezone is set to UTC
+  file: 
+    src: /usr/share/zoneinfo/UTC
+    dest: /etc/localtime
+    state: link
+    force: yes
+  tags:
+   - general
+ 
+- name: Ensure that rsyslog does not follow traditional timestamp, but ISO8601 format
+  replace: 
+    dest: /etc/rsyslog.conf
+    regexp: '^\$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat'
+    replace: '#$ActionFileDefaultTemplate RSYSLOG_TraditionalFileFormat'
+    backup: yes
+  tags:
+    - general
+
+- name: Restart rsyslog for ISO8601 timestamp to take effect
+  service:
+    name: rsyslog
+    state: restarted
+    enabled: yes
+  tags:
+    - general
+  
+- name: Install ntp 
+  yum: 
+    name: [ ntp ]
+    state: present
+  register: ntpinstall
+  tags:
+    - general
+
+
+- name: Start the ntp service
+  service: 
+    name: ntpd
+    state: restarted
+    enabled: yes
+  tags:
+    - general
+
+ 
+- name: Allow 'wheel' group to have passwordless sudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%wheel'
+    line: '%wheel ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'
+  tags:
+    - general
+
+      
+
+- name: Install Tools & Utilities (non development ones)
+  yum:
+    name: [
+     jq,
+     tmux,
+     lsof,
+     dos2unix,
+     unix2dos,
+     tree,
+     wget,
+     lz4,
+     curl,
+     rsync,
+     iptraf,
+     telnet,
+     nc,
+     tcpdump,
+     ltrace,
+     strace,
+     iftop,
+     pv,
+     git,
+     logrotate
+    ]    
+    state: installed
+    enablerepo: epel
+  tags: general
+
+- name: "Changing hostname"
+  hostname:
+       name: proxy-server-ansible
+  tags:
+    - general
+  
+- name: "Updated /etc/hosts"
+  lineinfile:
+          dest: /etc/hosts
+          regexp: '^127\.0\.0\.1[ \t]+localhost'
+          line: '127.0.0.1 localhost proxy-server-ansble'
+          state: present
+  tags:
+    - general
+
+  
+
+- name: "Restart network service"
+  service:
+       name: network
+       state: restarted
+  tags:
+    - general
+
