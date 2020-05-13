@@ -1,5 +1,7 @@
+#!/bin/bash
 
-hosts=$InstanceIds
+AWS_PROFILE=aakinlofa
+hosts=i-0a98a5e7c35fd0fc5
 
 for host in ${hosts[@]};
 do
