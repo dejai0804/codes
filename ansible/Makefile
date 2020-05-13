@@ -3,9 +3,8 @@
 export InstanceIds=i-0a98a5e7c35fd0fc5
 export AWS_PROFILE=aakinlofa
 
-#------------------------------------------------------------------------------------------------#
-general:   # rules to install common tools
-	ansible-playbook -i inventory/hosts general.yml  --vault-password-file password.yml
+#PATH := $(PATH):/Users/aakinlofa/codes/ansible/group_vars/
+
 
 #------------------------------------------------------------------------------------------------#
 
