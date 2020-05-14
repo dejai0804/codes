@@ -1,2 +1,6 @@
 [myservers]
 admin-box
+
+
+[general]
+proxy-server-ansible
