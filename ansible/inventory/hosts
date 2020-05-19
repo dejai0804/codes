@@ -3,4 +3,13 @@ admin-box
 
 
 [general]
+#admin-box
+#named-server
+#docker-nginx
+#omd-server
+#proxy-server
+#dhcp-server
+
+
+[proxy-servers]
 proxy-server-ansible

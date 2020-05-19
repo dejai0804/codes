@@ -1,0 +1,7 @@
+- hosts: proxy-servers
+  vars_files:
+    - group_vars/all.yml
+  become: yes
+  become_user: root
+  roles:
+    - { role: proxy, tags: [ proxy ] } 

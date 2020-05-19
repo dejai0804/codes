@@ -1,7 +1,7 @@
 ---
 
 
-- include: epel.yml
+#- include: epel.yml
 
 #-----------------------------------------------------------------------------------------------------------------------------
 
@@ -58,6 +58,26 @@
   tags:
     - general
 #------------------------------------------------------------------------------------------------------
+
+- name: Remove Tools & Utilities (non development ones)
+  yum:
+    name: "{{ item }}"
+    state: removed
+  with_items:
+      - httpd
+      - git
+      - vim
+      - lsof
+      - tree
+      - wget
+      - htop
+      - git
+
+  tags:
+    - general
+    - test
+
+
 
 - name: Install Tools & Utilities (non development ones)
   yum:

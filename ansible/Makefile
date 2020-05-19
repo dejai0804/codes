@@ -5,8 +5,11 @@ export AWS_PROFILE=aakinlofa
 
 #PATH := $(PATH):/Users/aakinlofa/codes/ansible/group_vars/
 
-
 #------------------------------------------------------------------------------------------------#
+
+proxy-server:
+	ansible-playbook -i inventory/hosts proxy.yml --vault-password-file password.yml
+#-------------------------------------------------------------------------------------------------#
 
 adminbox:
 	ansible-playbook -i inventory/hosts admin_box.yml  --vault-password-file password.yml
