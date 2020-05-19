@@ -1,0 +1,37 @@
+---
+
+
+- name: remove package
+  yum:
+    name: squid
+    state: absent
+   
+- name: install squid
+  yum: 
+    name: squid
+    state: present
+    update_cache: yes
+  tags:
+    - proxy
+
+- name: copy config files
+  copy: 
+     src: etc/squid/{{ item }}
+     dest: /etc/squid/
+     owner: root
+     group: root
+     mode: 0644
+  with_items:
+     - bad-ips
+     - badsites
+     - blockedsites.squid
+     - blockip.squid
+     - blockkeywords.squid
+     - passwd
+     - squid.conf
+  
+  
+- name:
+  service:
+    name: squid
+    state: started 
