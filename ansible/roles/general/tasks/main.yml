@@ -1,6 +1,9 @@
 ---
-- include: epel.yml
 
+
+#- include: epel.yml
+
+#-----------------------------------------------------------------------------------------------------------------------------
 
 - name: Ensure that timezone is set to UTC
   file: 
@@ -9,8 +12,8 @@
     state: link
     force: yes
   tags:
-   - general
- 
+    - general
+#--------------------------------------------------------------------------------------------- 
 - name: Ensure that rsyslog does not follow traditional timestamp, but ISO8601 format
   replace: 
     dest: /etc/rsyslog.conf
@@ -19,7 +22,7 @@
     backup: yes
   tags:
     - general
-
+#------------------------------------------------------------------------------------------
 - name: Restart rsyslog for ISO8601 timestamp to take effect
   service:
     name: rsyslog
@@ -27,7 +30,7 @@
     enabled: yes
   tags:
     - general
-  
+#-----------------------------------------------------------------------------------------------
 - name: Install ntp 
   yum: 
     name: [ ntp ]
@@ -36,7 +39,7 @@
   tags:
     - general
 
-
+#-----------------------------------------------------------------------------------------------
 - name: Start the ntp service
   service: 
     name: ntpd
@@ -44,8 +47,7 @@
     enabled: yes
   tags:
     - general
-
- 
+ #--------------------------------------------------------------------------------------------------
 - name: Allow 'wheel' group to have passwordless sudo
   lineinfile:
     dest: /etc/sudoers
@@ -55,8 +57,27 @@
     validate: 'visudo -cf %s'
   tags:
     - general
+#------------------------------------------------------------------------------------------------------
 
-      
+- name: Remove Tools & Utilities (non development ones)
+  yum:
+    name: "{{ item }}"
+    state: removed
+  with_items:
+      - httpd
+      - git
+      - vim
+      - lsof
+      - tree
+      - wget
+      - htop
+      - git
+
+  tags:
+    - general
+    - test
+
+
 
 - name: Install Tools & Utilities (non development ones)
   yum:
@@ -84,24 +105,25 @@
     ]    
     state: installed
     enablerepo: epel
-  tags: general
-
+  tags:
+    - general
+#--------------------------------------------------------------------------------------------------------
 - name: "Changing hostname"
   hostname:
        name: proxy-server-ansible
-  tags:
+  tags: 
     - general
+#------------------------------------------------------------------------------------------------
   
 - name: "Updated /etc/hosts"
   lineinfile:
           dest: /etc/hosts
           regexp: '^127\.0\.0\.1[ \t]+localhost'
-          line: '127.0.0.1 localhost proxy-server-ansble'
+          line: '127.0.0.1 localhost admin-box'
           state: present
   tags:
     - general
-
-  
+  #---------------------------------------------------------------------------------------------------------
 
 - name: "Restart network service"
   service:
@@ -109,4 +131,3 @@
        state: restarted
   tags:
     - general
-
