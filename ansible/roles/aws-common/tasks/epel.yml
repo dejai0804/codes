@@ -1,0 +1,11 @@
+---
+- name: "epel: Installing epel repo"
+  yum: 
+    name: "{{ item.name }}"
+    state: latest
+  tags:
+    - general
+
+  with_items:
+    - { name: 'epel-release.noarch' }
+  

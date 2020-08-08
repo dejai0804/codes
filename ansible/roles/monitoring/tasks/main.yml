@@ -1,0 +1,66 @@
+---
+- include: epel.yml
+
+
+- name: install check-mk-agent and xinetd
+  yum: 
+    name: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+      - check-mk-agent
+      - xinetd
+  tags:
+    - monitoring
+
+- name:
+  service:
+    name: xinetd
+    state: started
+  tags:
+    - monitoring
+
+- name: copy config files
+  copy: 
+     src: etc/xinetd.d/check-mk-agent
+     dest: /etc/xinetd.d/check-mk-agent
+     owner: root
+     group: root
+     mode: 0644
+  tags:
+    - monitoring
+  
+  
+- name:
+  service:
+    name: xinetd
+    state: restarted
+  tags:
+    - monitoring
+
+- name: stop iptables
+  service: 
+      name: "{{ item }}"
+      state: stopped
+  with_items:
+      - iptables
+  when:
+      - ansible_distribution == "CentOS"
+      - ansible_distribution_major_version == "6"
+  
+  tags: 
+      - iptables
+      - monitoring
+
+- name: stop firewalld service
+  service: 
+      name: "{{ item }}"
+      state: stopped
+  with_items:
+      - firewalld
+  when:
+      - ansible_distribution == "CentOS"
+      - ansible_distribution_major_version == "7"
+  tags: 
+      - monitoring
+      - firewalld

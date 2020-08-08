@@ -26,3 +26,23 @@ stop-adminbox:
 	sh /Users/aakinlofa/codes/admin/scripts/stopInstances.sh
 #---------------------------------------------------------------------------------------------------#
 
+deploy-general:
+	 ansible-playbook -i inventory/hosts general.yml --vault-password-file password.yml
+
+
+#-------------------------------------------------------------------------------------------------#
+
+yum-update:
+	ansible-playbook -v -i inventory/hosts yumupdate.yml  --vault-password-file password.yml
+#-------------------------------------------------------------------------------------------------#
+
+monitoring:
+	ansible-playbook -i inventory/hosts monitoring.yml --vault-password-file password.yml 
+
+#-------------------------------------------------------------------------------------------------#
+
+
+aws-common:
+	ansible-playbook -vv -i inventory/hosts aws-common.yml --vault-password-file password.yml 
+
+#-------------------------------------------------------------------------------------------------#

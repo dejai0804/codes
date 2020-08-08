@@ -110,7 +110,7 @@
 #--------------------------------------------------------------------------------------------------------
 - name: "Changing hostname"
   hostname:
-       name: proxy-server-ansible
+       name: docker-apache
   tags: 
     - general
 #------------------------------------------------------------------------------------------------
@@ -119,7 +119,7 @@
   lineinfile:
           dest: /etc/hosts
           regexp: '^127\.0\.0\.1[ \t]+localhost'
-          line: '127.0.0.1 localhost admin-box'
+          line: '127.0.0.1 localhost docker-apache'
           state: present
   tags:
     - general

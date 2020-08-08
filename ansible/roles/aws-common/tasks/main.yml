@@ -1,0 +1,60 @@
+---
+- include: epel.yml
+
+
+## Install and configure awslogs in amazon linux##
+
+- name : Install awslogs
+  yum:
+    name: [
+    awslogs
+  ]
+    state: installed
+  when: ansible_virtualization_type != 'docker'
+  tags:
+    - aws-commom
+
+
+- name: copy awslogs.conf file
+  copy:
+      src: etc/awslogs/awslogs.conf
+      dest: /etc/awslogs/awslogs.conf
+      owner: root
+      group: root
+      mode: '0600'
+  when: ansible_virtualization_type != 'docker'
+  tags:
+    - aws-commom
+  
+
+- name: copy awscli.conf file
+  copy:
+      src: etc/awslogs/awscli.conf
+      dest: /etc/awslogs/awscli.conf
+      owner: root
+      group: root
+      mode: '0600'
+  when: ansible_virtualization_type != 'docker'
+  tags:
+    - aws-commom
+  
+
+
+
+- name: enable awslogs service for running
+  service:
+     name: awslogsd
+     state: started
+  when: ansible_virtualization_type != 'docker'
+  tags:
+    - aws-commom
+
+- name: Enable awslogs for auto start
+  service: 
+      name: awslogsd
+      enabled: yes
+  when: ansible_virtualization_type != 'docker'
+  tags:
+    - aws-commom
+  
+   
