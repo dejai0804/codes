@@ -7,42 +7,97 @@ export AWS_PROFILE=aakinlofa
 
 #------------------------------------------------------------------------------------------------#
 
-proxy-server:
-	ansible-playbook -i inventory/hosts proxy.yml --vault-password-file password.yml
+
 #-------------------------------------------------------------------------------------------------#
 
+proxy-server:
+	ansible-playbook -i inventory/hosts proxy.yml --vault-password-file passwordFile 
+#-------------------------------------------------------------------------------------------------#
+
+
+#-------------------------------------------------------------------------------------------------#
+
+
 adminbox:
-	ansible-playbook -i inventory/hosts admin_box.yml  --vault-password-file password.yml
+	ansible-playbook -i inventory/hosts admin_box.yml  --vault-password-file passwordFile 
+#-------------------------------------------------------------------------------------------------#
+
+
+
 #-------------------------------------------------------------------------------------------------#
 ec2:
-	 ansible-playbook launch-ec2.yml --vault-password-file password.yml
+	 ansible-playbook launch-ec2.yml --vault-password-file passwordFile 
+#-------------------------------------------------------------------------------------------------#
+
+
 #-------------------------------------------------------------------------------------------------#
 all: ec2 adminbox
+#-------------------------------------------------------------------------------------------------#
+
+
 #-------------------------------------------------------------------------------------------------#
 start-adminbox:
 	sh /Users/aakinlofa/codes/admin/scripts/startInstances.sh
 #--------------------------------------------------------------------------------------------------#
+
+
+#-------------------------------------------------------------------------------------------------#
 stop-adminbox:
 	sh /Users/aakinlofa/codes/admin/scripts/stopInstances.sh
 #---------------------------------------------------------------------------------------------------#
 
+
+#-------------------------------------------------------------------------------------------------#
+
+
+
 deploy-general:
-	 ansible-playbook -i inventory/hosts general.yml --vault-password-file password.yml
+	 ansible-playbook -i inventory/hosts general.yml --vault-password-file passwordFile 
+
+#-------------------------------------------------------------------------------------------------#
 
 
 #-------------------------------------------------------------------------------------------------#
 
 yum-update:
-	ansible-playbook -v -i inventory/hosts yumupdate.yml  --vault-password-file password.yml
+	ansible-playbook -v -i inventory/hosts yumupdate.yml  --vault-password-file passwordFile 
+#-------------------------------------------------------------------------------------------------#
+
+
 #-------------------------------------------------------------------------------------------------#
 
 monitoring:
-	ansible-playbook -i inventory/hosts monitoring.yml --vault-password-file password.yml 
+	ansible-playbook -i inventory/hosts monitoring.yml --vault-password-file passwordFile  
 
 #-------------------------------------------------------------------------------------------------#
 
 
+#-------------------------------------------------------------------------------------------------#
+
 aws-common:
-	ansible-playbook -vv -i inventory/hosts aws-common.yml --vault-password-file password.yml 
+	ansible-playbook -vv -i inventory/hosts aws-common.yml --vault-password-file passwordFile  
+
+#-------------------------------------------------------------------------------------------------#
+
+
+#-------------------------------------------------------------------------------------------------#
+
+backup:
+	ansible-playbook -i inventory/hosts backup.yml --vault-password-file passwordFile  
+
+#-------------------------------------------------------------------------------------------------#
+
+
+#-------------------------------------------------------------------------------------------------#
+
+hostname:
+	ansible-playbook -i inventory/hosts hostname.yml --vault-password-file passwordFile  
+
+#-------------------------------------------------------------------------------------------------#
+
+#-------------------------------------------------------------------------------------------------#
+
+general:
+	ansible-playbook -i inventory/hosts general.yml --vault-password-file passwordFile  
 
 #-------------------------------------------------------------------------------------------------#

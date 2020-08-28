@@ -2,9 +2,26 @@
 - include: epel.yml
 
 
-## Install and configure awslogs in amazon linux##
+## Remove, Install and configure awslogs service in amazon linux##
 
-- name : Install awslogs
+
+
+
+
+- name : Remove awslogs package
+  yum:
+    name: [
+    awslogs
+  ]
+    state: absent
+  when: ansible_virtualization_type != 'docker'
+  tags:
+    - aws-commom
+
+
+
+
+- name : Install awslogs package
   yum:
     name: [
     awslogs

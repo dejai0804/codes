@@ -59,10 +59,10 @@
     - general
 #------------------------------------------------------------------------------------------------------
 
-- name: Remove Tools & Utilities (non development ones)
+- name: Install Tools & Utilities (non development ones)
   yum:
     name: "{{ item }}"
-    state: removed
+    state: present
   with_items:
       - httpd
       - git
@@ -108,26 +108,3 @@
   tags:
     - general
 #--------------------------------------------------------------------------------------------------------
-- name: "Changing hostname"
-  hostname:
-       name: docker-apache
-  tags: 
-    - general
-#------------------------------------------------------------------------------------------------
-  
-- name: "Updated /etc/hosts"
-  lineinfile:
-          dest: /etc/hosts
-          regexp: '^127\.0\.0\.1[ \t]+localhost'
-          line: '127.0.0.1 localhost docker-apache'
-          state: present
-  tags:
-    - general
-  #---------------------------------------------------------------------------------------------------------
-
-- name: "Restart network service"
-  service:
-       name: network
-       state: restarted
-  tags:
-    - general

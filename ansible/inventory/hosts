@@ -3,16 +3,25 @@
 
 
 [general]
-#admin-box
-#named-server
-#docker-nginx
-#docker-apache
-#omd-server
-#proxy-server
-#dhcp-server
-#class-website
-#Splunk-Server
-
+admin-box
+named-server
+docker-nginx
+docker-apache
+omd-server
+proxy-server
+dhcp-server
+class-website
+splunk-server
+jenkins-server
+lamp
+nfs-server
+kickstart
+deejay-server
+www
+ansible-class
+apache-class
+centos6
+backup-server
 
 [proxy-servers]
 #proxy-server-ansible
@@ -36,7 +45,8 @@ www
 ansible-class
 apache-class
 centos6
-aws-server
+backup-server
+#aws-server
 
 
 
@@ -63,7 +73,36 @@ deejay-server
 www
 ansible-class
 apache-class
+backup-server
 #centos6
 
 [aws-common]
 aws-server
+
+[backup-servers]
+admin-box
+named-server
+docker-nginx
+docker-apache
+omd-server
+proxy-server
+dhcp-server
+class-website
+splunk-server
+jenkins-server
+jenkins-class
+lamp
+#nfs-server
+kickstart
+deejay-server
+www
+ansible-class
+apache-class
+centos6
+#aws-server
+
+[test-server]
+centos6
+
+[hostname-servers]
+centos6
