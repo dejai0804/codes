@@ -1,0 +1,12 @@
+
+- name: copy /etc/hosts files
+  copy: 
+     src: etc/hosts
+     dest: /etc/hosts
+     owner: root
+     group: root
+     mode: 0644
+  tags:
+    - local-dns
+  
+  

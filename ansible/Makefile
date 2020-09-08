@@ -1,4 +1,10 @@
 
+RESET = \033[0m
+PURPLE = \033[0;35m
+GREEN = \033[0;32m
+LINE = $(PURPLE)----------------------------------------------------------------------------------------- $(RESET)
+
+HOST ?= yumupdate
 #set variables here
 export InstanceIds=i-0a98a5e7c35fd0fc5
 export AWS_PROFILE=aakinlofa
@@ -99,5 +105,20 @@ hostname:
 
 general:
 	ansible-playbook -i inventory/hosts general.yml --vault-password-file passwordFile  
+
+#-------------------------------------------------------------------------------------------------#
+
+pinghost:  ## check connections with hosts
+	@echo "$(LINE)"
+	@echo "Checking Hosts to know the ones alive"
+	ansible -i inventory/hosts $(HOST) -m ping --vault-password-file ./passwordFile
+	@echo "$(LINE)"
+	
+#-------------------------------------------------------------------------------------------------#
+
+#-------------------------------------------------------------------------------------------------#
+
+local-dns:
+	ansible-playbook -i inventory/hosts local-dns.yml --vault-password-file passwordFile  
 
 #-------------------------------------------------------------------------------------------------#

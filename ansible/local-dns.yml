@@ -1,0 +1,7 @@
+- hosts: local-dns-servers
+  vars_files:
+    - group_vars/all.yml
+  become: yes
+  become_user: root
+  roles:
+    - { role: local-dns, tags: [ local-dns ] } 

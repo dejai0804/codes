@@ -3,7 +3,7 @@
 #--------------------------------------------------------------------------------------------------------
 - name: "Changing hostname"
   hostname:
-       name: centos6
+       name: backup-server.dsi.comm
   tags: 
     - hostname
 #------------------------------------------------------------------------------------------------
@@ -12,7 +12,7 @@
   lineinfile:
           dest: /etc/hosts
           regexp: '^127\.0\.0\.1[ \t]+localhost'
-          line: '127.0.0.1 localhost centos6'
+          line: '127.0.0.1 localhost backup-server.dsi.comm'
           state: present
   tags:
     - hostname

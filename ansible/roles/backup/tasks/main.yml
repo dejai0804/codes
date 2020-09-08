@@ -47,6 +47,6 @@
   cron:
     name: "backup root dir"
     minute: "*/10"
-sudo rsync -aAXv / --exclude={'/dev/*','/proc/*','/sys/*','/tmp/*','/run/*','/mnt/*','/media/*','/lost+found'} root@10.0.0.237:/opt/mybackup/$HOSTNAME/ > /dev/null    job: ""
+    job: "sudo rsync -aAXv / --exclude={'/dev/*','/proc/*','/sys/*','/tmp/*','/run/*','/mnt/*','/media/*','/lost+found'} root@10.0.0.237:/opt/mybackup/$HOSTNAME/ > /dev/null"
   tags:
     - backup
