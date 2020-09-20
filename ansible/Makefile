@@ -66,14 +66,14 @@ deploy-general:
 #-------------------------------------------------------------------------------------------------#
 
 yum-update:
-	ansible-playbook -v -i inventory/hosts yumupdate.yml  --vault-password-file passwordFile 
+	ansible-playbook -v -i inventory/hosts yum-update.yml  --vault-password-file passwordFile 
 #-------------------------------------------------------------------------------------------------#
 
 
 #-------------------------------------------------------------------------------------------------#
 
 monitoring:
-	ansible-playbook -i inventory/hosts monitoring.yml --vault-password-file passwordFile  
+	ansible-playbook -i inventory/hosts monitoring.yml --vault-password-file passwordFile  --tags iptables
 
 #-------------------------------------------------------------------------------------------------#
 
