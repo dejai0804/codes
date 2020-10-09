@@ -42,6 +42,7 @@ vsftp.dsi.comm
 ##-------------------------------------------------------------------------------------
 
 [yumupdate]
+jira-server.dsi.comm
 proxy-server.dsi.comm
 ns1.dsi.comm
 ns2.dsi.comm
@@ -151,13 +152,13 @@ vsftp.dsi.comm
 
 
 [test-server]
-centos6
+centos6.dsi.comm
 
 ##------------------------------------------------------------------------------------
 ##-------------------------------------------------------------------------------------
 
 [hostname-servers]
-ansible.dsi.comm
+jira-server.dsi.comm
 
 
 ## ------------------------------------------------------------------------------------
@@ -232,3 +233,4 @@ centos6.dsi.comm
 centos7b.dsi.comm
 backup-server.dsi.comm
 vsftp.dsi.comm
+jira-server.dsi.comm
