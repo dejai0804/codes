@@ -1,0 +1,22 @@
+---
+
+
+- name: remove package
+  yum:
+    name: httpd
+    state: absent
+   
+- name: install httpd
+  yum: 
+    name: httpd
+    state: present
+    update_cache: yes
+  tags:
+    - httpd
+
+- name:
+  service:
+    name: httpd
+    state: started 
+  tags:
+    - httpd
