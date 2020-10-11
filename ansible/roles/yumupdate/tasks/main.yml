@@ -5,3 +5,4 @@
     state: latest
   tags:
     - yumupdate
+    - yumupdates
