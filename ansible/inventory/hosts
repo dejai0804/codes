@@ -115,7 +115,11 @@ vsftp.dsi.comm
 [aws-common]
 aws-server
 
+
 [backup-servers]
+jira-server.dsi.comm
+
+[Freeze-backup-servers]
 proxy-server.dsi.comm
 ns1.dsi.comm
 ns2.dsi.comm
@@ -158,12 +162,7 @@ centos6.dsi.comm
 ##-------------------------------------------------------------------------------------
 
 [hostname-servers]
-<<<<<<< HEAD
 jira-server.dsi.comm
-=======
-test-server.dsi.comm
->>>>>>> 438d881404b8129c52565cadd0e49ae5ca331e66
-
 
 ## ------------------------------------------------------------------------------------
 ##-------------------------------------------------------------------------------------
