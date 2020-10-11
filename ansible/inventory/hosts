@@ -236,7 +236,6 @@ centos6.dsi.comm
 centos7b.dsi.comm
 backup-server.dsi.comm
 vsftp.dsi.comm
-<<<<<<< HEAD
+
 jira-server.dsi.comm
-=======
->>>>>>> 438d881404b8129c52565cadd0e49ae5ca331e66
+
