@@ -5,6 +5,7 @@
 ##-------------------------------------------------------------------------------------
 
 [general]
+jenkins
 proxy-server.dsi.comm
 ns1.dsi.comm
 ns2.dsi.comm
@@ -20,7 +21,6 @@ nfs.dsi.comm
 kickstart6.dsi.comm
 kickstart7.dsi.comm
 deejay.dsi.comm
-
 ansible.dsi.comm
 centos6.dsi.comm
 backup-server.dsi.comm

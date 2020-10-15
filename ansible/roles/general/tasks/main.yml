@@ -118,7 +118,7 @@
     - banner
 
 - name: Add warning banner to sshd_config
-  linefile:
+  lineinfile:
      dest: /etc/ssh/sshd_config
      state: present
      regexp: '^Banner '
