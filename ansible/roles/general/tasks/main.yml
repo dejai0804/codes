@@ -109,3 +109,31 @@
     - general
     - tools
 #--------------------------------------------------------------------------------------------------------
+
+- name: Copy config files
+  copy:
+    src: etc/issue.net
+    dest: /etc/
+  tags:
+    - general
+    - banner
+
+- name: Add warning banner to sshd_config
+  lineinfile:
+     dest: /etc/ssh/sshd_config
+     state: present
+     regexp: '^Banner '
+     line: 'Banner /etc/issue.net'
+  register: newconfig
+  tags:
+    - general
+    - banner
+
+- name: Restart sshd service if there is a change in sshd_config file
+  service:
+    name: sshd
+    state: restarted
+  when: newconfig.changed
+  tags:
+    - general
+    - banner
