@@ -1,0 +1,7 @@
+- name: Add jenkins to wheel group
+  user:
+    name: jenkins
+    groups: wheel
+    append: yes
+  tags:
+    - jenkins

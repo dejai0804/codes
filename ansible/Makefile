@@ -122,3 +122,6 @@ local-dns:
 	ansible-playbook -i inventory/hosts local-dns.yml --vault-password-file passwordFile  
 
 #-------------------------------------------------------------------------------------------------#
+
+jenkins:
+	ansible-playbook -i inventory/hosts jenkins.yml --vault-password-file passwordFile  

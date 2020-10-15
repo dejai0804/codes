@@ -192,3 +192,5 @@ backup-server.dsi.comm
 vsftp.dsi.comm
 jira-server.dsi.comm
 
+[jenkins]
+jenkins
