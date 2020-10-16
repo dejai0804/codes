@@ -5,3 +5,26 @@
     append: yes
   tags:
     - jenkins
+
+
+
+
+- name: generate SSH key "{{ssh_key_filename}}"
+      user:
+        name: "{{ansible_user}}"
+        generate_ssh_key: yes
+        ssh_key_type: rsa
+        ssh_key_bits: 4096
+        ssh_key_file: .ssh/{{ssh_key_filename}}
+        ssh_key_passphrase: "{{ssh_passphrase}}"
+        force: no
+
+- name: copy root private key to jenkins home directoty 
+  copy: 
+    src: id_rsa 
+    dest: /var/lib/jenkins/.ssh/
+    mode: 700 
+    group: jenkins 
+    owner: jenkins 
+    file: id_rsa
+  tags: keys 
