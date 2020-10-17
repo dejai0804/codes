@@ -16,7 +16,7 @@ admin-box.dsi.comm
 dhcp-server.dsi.comm
 splunk.dsi.comm
 class-website.dsi.comm
-jenkins-prod.dsi.comm
+jenkins
 nfs.dsi.comm
 kickstart6.dsi.comm
 kickstart7.dsi.comm
@@ -25,6 +25,7 @@ ansible.dsi.comm
 centos6.dsi.comm
 backup-server.dsi.comm
 vsftp.dsi.comm
+external
 
 [proxy-servers]
 #proxy-server-ansible
@@ -44,17 +45,16 @@ admin-box.dsi.comm
 dhcp-server.dsi.comm
 splunk.dsi.comm
 class-website.dsi.comm
-jenkins-prod.dsi.comm
+jenkins
 nfs.dsi.comm
 kickstart6.dsi.comm
 kickstart7.dsi.comm
 deejay.dsi.comm
-
 ansible.dsi.comm
 centos6.dsi.comm
 backup-server.dsi.comm
 vsftp.dsi.comm
-
+external
 
 ##------------------------------------------------------------------------------------
 ##-------------------------------------------------------------------------------------
@@ -70,17 +70,16 @@ admin-box.dsi.comm
 dhcp-server.dsi.comm
 splunk.dsi.comm
 class-website.dsi.comm
-jenkins-prod.dsi.comm
+jenkins
 nfs.dsi.comm
 kickstart6.dsi.comm
 kickstart7.dsi.comm
 deejay.dsi.comm
-
 ansible.dsi.comm
 centos6.dsi.comm
 backup-server.dsi.comm
 vsftp.dsi.comm
-
+external
 
 ##------------------------------------------------------------------------------------
 ##-------------------------------------------------------------------------------------
@@ -91,8 +90,6 @@ aws-server
 
 [backup-servers]
 jira-server.dsi.comm
-
-[Freeze-backup-servers]
 proxy-server.dsi.comm
 ns1.dsi.comm
 ns2.dsi.comm
@@ -103,12 +100,11 @@ admin-box.dsi.comm
 dhcp-server.dsi.comm
 splunk.dsi.comm
 class-website.dsi.comm
-jenkins-prod.dsi.comm
+jenkins
 nfs.dsi.comm
 kickstart6.dsi.comm
 kickstart7.dsi.comm
 deejay.dsi.comm
-
 ansible.dsi.comm
 centos6.dsi.comm
 vsftp.dsi.comm
@@ -126,7 +122,7 @@ centos6.dsi.comm
 ##-------------------------------------------------------------------------------------
 
 [hostname-servers]
-jira-server.dsi.comm
+#jira-server.dsi.comm
 
 ## ------------------------------------------------------------------------------------
 ##-------------------------------------------------------------------------------------
@@ -146,15 +142,12 @@ admin-box.dsi.comm
 dhcp-server.dsi.comm
 splunk.dsi.comm
 class-website.dsi.comm
-jenkins-prod.dsi.comm
+jenkins
 esxi
 nfs.dsi.comm
 kickstart6.dsi.comm
 kickstart7.dsi.comm
 deejay.dsi.comm
-
-
-
 ansible.dsi.comm
 centos6.dsi.comm
 backup-server.dsi.comm
@@ -176,21 +169,17 @@ admin-box.dsi.comm
 dhcp-server.dsi.comm
 splunk.dsi.comm
 class-website.dsi.comm
-jenkins-prod.dsi.comm
+jenkins
 nfs.dsi.comm
 kickstart6.dsi.comm
 kickstart7.dsi.comm
 deejay.dsi.comm
-
-
-
 ansible.dsi.comm
 centos6.dsi.comm
-#
-
 backup-server.dsi.comm
 vsftp.dsi.comm
 jira-server.dsi.comm
+external
 
 [jenkins]
 jenkins
