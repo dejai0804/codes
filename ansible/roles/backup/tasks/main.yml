@@ -46,7 +46,8 @@
 - name: Ensure a cronjob that runs to backup root dir
   cron:
     name: "backup root dir"
-    minute: "*/10"
+    minute: 0
+    hour: 12
     job: "sudo rsync -aAXv / --exclude={'/dev/*','/proc/*','/sys/*','/tmp/*','/run/*','/mnt/*','/media/*','/lost+found'} root@10.0.0.237:/opt/mybackup/$HOSTNAME/ > /dev/null"
   tags:
     - backup
